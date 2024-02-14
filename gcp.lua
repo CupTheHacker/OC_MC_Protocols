@@ -54,7 +54,7 @@ function M.gcp_cli_raw(gcp_input_data, gcp_dst_addr, gcp_dst_port, gcp_src_addr)
     component.modem.open(gcp_src_port)
     component.modem.send(gcp_dst_addr, gcp_dst_port, serialized_packet, gcp_src_port)
 
-    _, _, _, _, _, response = event.pull(1, "modem") -- Receive for 5 seconds
+    _, _, _, _, _, response = event.pull(1, "modem") -- Receive for 1 seconds
     component.modem.close(gcp_src_port)
 
     return response
@@ -83,7 +83,7 @@ function M.gcp_cli_file(gcp_input_data, gcp_file_name, gcp_password, gcp_dst_add
     component.modem.open(gcp_src_port)
     component.modem.send(gcp_dst_addr, gcp_dst_port, serialized_packet, gcp_src_port)
 
-    _, _, _, _, _, response = event.pull(1, "modem") -- Receive for 5 seconds
+    _, _, _, _, _, response = event.pull(1, "modem") -- Receive for 1 seconds
     component.modem.close(gcp_src_port)
 
     return response
@@ -111,7 +111,7 @@ function M.gcp_cli_command(gcp_input_data, gcp_password, gcp_dst_addr, gcp_dst_p
     component.modem.open(gcp_src_port)
     component.modem.send(gcp_dst_addr, gcp_dst_port, serialized_packet, gcp_src_port)
 
-    _, _, _, _, _, response = event.pull(1, "modem") -- Receive for 5 seconds
+    _, _, _, _, _, response = event.pull(1, "modem") -- Receive for 1 seconds
     component.modem.close(gcp_src_port)
 
     return response
