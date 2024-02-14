@@ -117,12 +117,13 @@ function M.gcp_cli_command(gcp_input_data, gcp_password, gcp_dst_addr, gcp_dst_p
     return response
 end
 
-function M.gcp_ser(gcp_server_port, gcp_server_password_for_cmd)
+function M.gcp_ser(gcp_server_port, gcp_server_password)
     log_file = io.open("/var/log/gcp.log", "a")
     component.modem.open(gcp_server_port)
     _, _, _, _, _, response = event.pull("modem")
 
     unserialized_response = serialization.unserialize(response)
+
     source_address = unserialized_response.headers.source_address
     source_port = unserialized_response.headers.source_port
     destination_port = unserialized_response.headers.destination_port
@@ -135,7 +136,7 @@ function M.gcp_ser(gcp_server_port, gcp_server_password_for_cmd)
         data = unserialized_response.body.data
         password = unserialized_response.body.meta_data.password
 
-        if password == gcp_server_password_for_cmd then
+        if password == gcp_server_password then
             file = io.open(file_name, "w")
             file:write(data)
             file:close()
@@ -155,7 +156,7 @@ function M.gcp_ser(gcp_server_port, gcp_server_password_for_cmd)
         data = unserialized_response.body.data
         password = unserialized_response.body.meta_data.password
 
-        if password == gcp_server_password_for_cmd then
+        if password == gcp_server_password then
             component.modem.send(source_address, source_port, "Done.")
             log_file:write(source_address .. ":" .. source_port .. " -> " .. "X-X-X-X:" .. destination_port .. " " .. "JSON: " .. response .. " " .. "Done." .. '\n\n')
             log_file:close()
